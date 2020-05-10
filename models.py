@@ -16,7 +16,6 @@ class Route(Model):
   location = CharField() 
   length = IntegerField()
   skill_level = IntegerField()
-  obstacles = CharField()
   comments = CharField()
   created_at: DateTimeField(default=datetime.datetime.now)
 
