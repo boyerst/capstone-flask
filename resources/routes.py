@@ -48,7 +48,31 @@ def create_route():
     status=201
     ), 201
 
+#UPDATE /routes/id
+@routes.route('/<id>', methods=['PUT'])
+def update_route(id):
+  payload = request.get_json()
 
+  update_query = models.Route.update(
+    rider_id=payload['rider_id'],
+    route_id=payload['route_id'],
+    location=payload['location'], 
+    length=payload['length'], 
+    skill_level=payload['skill_level'],
+    comments=payload['comments']
+  ).where(models.Route.id == id)
+  num_of_rows_modified = update_query.execute()
+  updated_route = models.Route.get_by_id(id) 
+  updated_route_dict = model_to_dict(updated_route)
+  return jsonify(
+    data=updated_route_dict,
+    message=f"Successfully updated route with id {id}",
+    status=200
+  ), 200
+
+
+
+#DELETE /route/id
 @routes.route('/<id>', methods=['DELETE']) 
 def delete_route(id):
   delete_query = models.Route.delete().where(models.Route.id == id)
