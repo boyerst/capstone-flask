@@ -26,6 +26,7 @@ login_manager.init_app(app)
 CORS(routes, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 
+
 app.register_blueprint(routes, url_prefix='/api/v1/routes')
 app.register_blueprint(users, url_prefix='/api/v1/users')
 
