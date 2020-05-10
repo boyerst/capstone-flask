@@ -48,11 +48,12 @@ def create_route():
     status=201
     ), 201
 
+
+
 #UPDATE /routes/id
 @routes.route('/<id>', methods=['PUT'])
 def update_route(id):
   payload = request.get_json()
-
   update_query = models.Route.update(
     rider_id=payload['rider_id'],
     route_id=payload['route_id'],
