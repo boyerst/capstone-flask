@@ -47,3 +47,15 @@ def create_route():
     message = 'successfully created route',
     status=201
     ), 201
+
+
+@routes.route('/<id>', methods=['DELETE']) 
+def delete_route(id):
+  delete_query = models.Route.delete().where(models.Route.id == id)
+  num_of_rows_deleted = delete_query.execute()
+  print(num_of_rows_deleted)
+  return jsonify(
+    data={},
+    message="Successfully deleted route with id {}".format(num_of_rows_deleted, id),
+    status=200
+  ), 200
