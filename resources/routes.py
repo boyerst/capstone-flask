@@ -1,8 +1,8 @@
 import models
 
+from flask import Blueprint, request, jsonify
 
-from flask import Blueprint, request
-
+from playhouse.shortcuts import model_to_dict 
 
 
 routes = Blueprint('routes', 'routes')
@@ -12,12 +12,23 @@ routes = Blueprint('routes', 'routes')
 
 
 
-
+#INDEX /routes
 @routes.route('/')
 def routes_index():
-  return "routes resource working" 
+  result = models.Route.select()
+  route_dicts = [model_to_dict(route) for route in result]
+
+  print(route_dicts)
+
+  return jsonify({
+    'data': route_dicts,
+    'message': f"Successfully found {len(route_dicts)} routes",
+    'status': 200
+  }), 200
 
 
+
+#CREATE /routes/
 @routes.route('/', methods=['POST'])
 def create_route():
   payload = request.get_json()
@@ -28,7 +39,11 @@ def create_route():
     location=payload['location'], 
     length=payload['length'], 
     skill_level=payload['skill_level'],
-    obstacles=payload['obstacles'], 
     comments=payload['comments'])
+  route_dict=model_to_dict(new_route)
   print(new_route)
-  return "route create route hitting - check terminal"
+  return jsonify(
+    data=route_dict, 
+    message = 'successfully created route',
+    status=201
+    ), 201
