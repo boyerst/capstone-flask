@@ -19,7 +19,7 @@ class User(UserMixin, Model):
 
 
 class Route(Model):
-  rider_id = ForeignKeyField(User, backref='routes')
+  user_id = ForeignKeyField(User, backref='routes')
   location = CharField() 
   length = IntegerField()
   skill_level = IntegerField()
@@ -32,10 +32,12 @@ class Route(Model):
 
 
 class Marker(Model):
-  marker_id = ForeignKeyField(Route, backref='markers')
+  route_id = ForeignKeyField(Route, backref='markers')
   latitude = DecimalField()
   longitude = DecimalField()
-  created_at: DateTimeField(default=datetime.datetime.now)
+  image = TextField()
+  description = CharField()
+  
 
   class Meta:
     database = DATABASE

@@ -37,7 +37,7 @@ def create_route():
   payload = request.get_json()
   print(payload)
   new_route = models.Route.create(
-    rider_id=payload['rider_id'],
+    user_id=payload['user_id'],
     location=payload['location'], 
     length=payload['length'], 
     skill_level=payload['skill_level'],
@@ -57,7 +57,7 @@ def create_route():
 def update_route(id):
   payload = request.get_json()
   update_query = models.Route.update(
-    rider_id=payload['rider_id'],
+    user_id=payload['user_id'],
     location=payload['location'], 
     length=payload['length'], 
     skill_level=payload['skill_level'],
