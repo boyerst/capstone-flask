@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 
 from resources.routes import routes
 from resources.users import users
+from resources.markers import markers
 
 import models
 
@@ -22,7 +23,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-
+# SESSION
 @login_manager.user_loader
 def load_user(user_id):
   try:
@@ -32,7 +33,7 @@ def load_user(user_id):
   except models.DoesNotExist: 
     return None
 
-
+# AUTH
 @login_manager.unauthorized_handler
 def unauthorized():
   return jsonify(
@@ -46,10 +47,12 @@ def unauthorized():
 
 
 CORS(routes, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(markers, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 
 
 app.register_blueprint(routes, url_prefix='/api/v1/routes')
+app.register_blueprint(markers, url_prefix='/api/v1/markers')
 app.register_blueprint(users, url_prefix='/api/v1/users')
 
 

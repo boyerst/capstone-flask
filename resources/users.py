@@ -96,9 +96,37 @@ def logout():
 
 
 
+#ALL(Testing Route) /users/all 
+@users.route('/all', methods=['GET'])
+def user_index():
+  users = models.User.select()
+  user_dicts = [ model_to_dict(user) for user in users ]
+  for user_dict in user_dicts:
+    user_dict.pop('password')
+  print(user_dicts)
+  return jsonify(user_dicts), 200
 
 
 
+#CURRENT_USER(Testing Route) /users/current_user
+@users.route('/logged_in_user', methods=['GET'])
+def get_logged_in_user():
+  print(current_user)
+  print(type(current_user)) 
+  if not current_user.is_authenticated: 
+    return jsonify(
+      data={},
+      message="No user is currently logged in",
+      status=401,
+    ), 401
+  else:
+    user_dict = model_to_dict(current_user)
+    user_dict.pop('password')
+    return jsonify(
+      data=user_dict,
+      message=f"Currently logged in as {user_dict['email']}.",
+      status=200
+    ), 200
 
 
 
