@@ -22,6 +22,7 @@ class CustomJsonEncoder(json.JSONEncoder):
       return float(obj)
     return super(CustomJsonEncoder, self).default(obj)
 
+
 #INDEX /markers
 # @markers.route('/', methods=['GET'])
 # def markers_index():
@@ -34,6 +35,7 @@ class CustomJsonEncoder(json.JSONEncoder):
 #     'message': f"Successfully found {len(current_user_marker_dicts)} markers",
 #     'status': 200
 #   }), 200
+
 
 
 #CREATE /markers/
@@ -78,6 +80,19 @@ def update_marker(id):
   ), 200
 
 
+#DELETE /route/id
+@markers.route('/<id>', methods=['DELETE']) 
+def delete_route(id):
+  delete_query = models.Marker.delete().where(models.Marker.id == id)
+  num_of_rows_deleted = delete_query.execute()
+  print(num_of_rows_deleted)
+  return jsonify(
+    data={},
+    message="Successfully deleted marker with id {}".format(num_of_rows_deleted, id),
+    status=200
+  ), 200
+
+
 
 #ALL MARKERS /markers/all
 @markers.route('/all', methods=['GET'])
@@ -86,24 +101,7 @@ def marker_index():
   marker_dicts = [ model_to_dict(marker) for marker in markers ]
   print(marker_dicts)
   return json.dumps(marker_dicts, cls=CustomJsonEncoder), 200
-  # return json.dumps(Decimal(marker_dicts), use_decimal=True), 200
-  # return json.loads((marker_dicts, parse_float==decimal.Decimal), use_decimal=True), 200
-
-
-# @markers.route('/all', methods=['GET'])
-# def marker_index():
-#   markers = models.Marker.select()
-#   marker_dicts = [ model_to_dict(marker) for marker in markers ]
-#   marker_dicts_serialized = marker_dicts.append(str(row[0]))
-#   print(marker_dicts_serialized)
-#   return json.dumps(marker_dicts_serialized), 200
-
-# @markers.route('/all', methods=['GET'])
-# def marker_index():
-#   markers = models.Marker.select()
-#   marker_dicts = [ model_to_dict(marker) for marker in markers ]
-#   print(marker_dicts)
-#   return json.dumps(marker_dicts, default=default), 200
+ 
 
 
 
