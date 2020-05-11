@@ -37,6 +37,31 @@ class CustomJsonEncoder(json.JSONEncoder):
 #   }), 200
 
 
+#SHOW /routes/id ORIGINAL
+@markers.route('/<id>', methods=['GET'])
+def show_marker(id):
+  marker = models.Marker.get_by_id(id)
+  if not current_user.is_authenticated:
+    return jsonify(
+      data={
+        'user_id': route.user_id,
+        'length': route.length,
+        'skill_level': route.skill_level,
+        'comments': route.comments,
+      },
+      message="Registered users can see more info about this route",
+      status=200
+    ), 200
+  else:
+    marker_dict = model_to_dict(marker)
+    # marker_dict['user_id'].pop('password')
+    return jsonify(
+      data=marker_dict, 
+      message=f"Found route with id {id}",
+      status=200
+      ), 200
+
+
 
 #CREATE /markers/
 @markers.route('/', methods=['POST'])
