@@ -27,7 +27,29 @@ def routes_index():
     'status': 200
   }), 200
 
-
+# SHOW /routes/id
+@routes.route('/<id>', methods=['GET'])
+def show_route(id):
+  route = models.Route.get_by_id(id)
+  if not current_user.is_authenticated:
+    return jsonify(
+      data={
+        'user_id': route.user_id,
+        'length': route.length,
+        'skill_level': route.skill_level,
+        'comments': route.comments,
+      },
+      message="Registered users can see more info about this route",
+      status=200
+    ), 200
+  else:
+    route_dict = model_to_dict(route)
+    route_dict['user_id'].pop('password')
+    return jsonify(
+      data=route_dict, 
+      message=f"Found route with id {id}",
+      status=200
+      ), 200
 
 
 
