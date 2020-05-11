@@ -29,17 +29,6 @@ def routes_index():
 
 
 
-  # result = models.Route.select()
-  # route_dicts = [model_to_dict(route) for route in result]
-
-  # print(route_dicts)
-
-  # return jsonify({
-  #   'data': route_dicts,
-  #   'message': f"Successfully found {len(route_dicts)} routes",
-  #   'status': 200
-  # }), 200
-
 
 
 #CREATE /routes/
