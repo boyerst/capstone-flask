@@ -1,30 +1,39 @@
 
 import models
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, json
+
+from decimal import Decimal
 
 from playhouse.shortcuts import model_to_dict 
 
 from flask_login import current_user, login_required
 
+
+
+
 markers = Blueprint('markers', 'markers')
 
 
 
+class CustomJsonEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, Decimal):
+      return float(obj)
+    return super(CustomJsonEncoder, self).default(obj)
 
 #INDEX /markers
-@markers.route('/', methods=['GET'])
-def markers_index():
-  result = models.Marker.select()
-  marker_dicts = [model_to_dict(marker) for marker in result]
-
-  print(marker_dicts)
-
-  return jsonify({
-    'data': marker_dicts,
-    'message': f"Successfully found {len(marker_dicts)} markers",
-    'status': 200
-  }), 200
+# @markers.route('/', methods=['GET'])
+# def markers_index():
+#   current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.markers] 
+#   for marker_dict in current_user_marker_dicts:
+#     marker_dict['user_id'].pop('password')
+#   print(current_user_marker_dicts)
+#   return jsonify({
+#     'data': current_user_marker_dicts,
+#     'message': f"Successfully found {len(current_user_marker_dicts)} markers",
+#     'status': 200
+#   }), 200
 
 
 #CREATE /markers/
@@ -46,3 +55,56 @@ def create_marker():
     message = 'successfully created marker',
     status=201
     ), 201
+
+
+#UPDATE /markers/id
+@markers.route('/<id>', methods=['PUT'])
+def update_marker(id):
+  payload = request.get_json()
+  update_query = models.Marker.update(
+    route_id=payload['route_id'],
+    latitude=payload['latitude'],
+    longitude=payload['longitude'],
+    image=payload['image'],
+    description=payload['description']
+  ).where(models.Marker.id == id)
+  num_of_rows_modified = update_query.execute()
+  updated_marker = models.Marker.get_by_id(id) 
+  updated_marker_dict = model_to_dict(updated_marker)
+  return jsonify(
+    data=updated_route_dict,
+    message=f"Successfully updated route with id {id}",
+    status=200
+  ), 200
+
+
+
+#ALL MARKERS /markers/all
+@markers.route('/all', methods=['GET'])
+def marker_index():
+  markers = models.Marker.select()
+  marker_dicts = [ model_to_dict(marker) for marker in markers ]
+  print(marker_dicts)
+  return json.dumps(marker_dicts, cls=CustomJsonEncoder), 200
+  # return json.dumps(Decimal(marker_dicts), use_decimal=True), 200
+  # return json.loads((marker_dicts, parse_float==decimal.Decimal), use_decimal=True), 200
+
+
+# @markers.route('/all', methods=['GET'])
+# def marker_index():
+#   markers = models.Marker.select()
+#   marker_dicts = [ model_to_dict(marker) for marker in markers ]
+#   marker_dicts_serialized = marker_dicts.append(str(row[0]))
+#   print(marker_dicts_serialized)
+#   return json.dumps(marker_dicts_serialized), 200
+
+# @markers.route('/all', methods=['GET'])
+# def marker_index():
+#   markers = models.Marker.select()
+#   marker_dicts = [ model_to_dict(marker) for marker in markers ]
+#   print(marker_dicts)
+#   return json.dumps(marker_dicts, default=default), 200
+
+
+
+

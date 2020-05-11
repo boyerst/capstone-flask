@@ -19,7 +19,7 @@ routes = Blueprint('routes', 'routes')
 def routes_index():
   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes] 
   for route_dict in current_user_route_dicts:
-    route_dict['rider_id'].pop('password')
+    route_dict['user_id'].pop('password')
   print(current_user_route_dicts)
   return jsonify({
     'data': current_user_route_dicts,
@@ -90,7 +90,7 @@ def delete_route(id):
 
 
 
-#ALL ROUTES
+#ALL ROUTES /routes/all
 @routes.route('/all', methods=['GET'])
 def route_index():
   routes = models.Route.select()
