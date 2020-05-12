@@ -28,6 +28,8 @@ def routes_index():
     'status': 200
   }), 200
 
+
+
 #SHOW /routes/id
 @routes.route('/<id>', methods=['GET'])
 def show_route(id):
@@ -61,7 +63,7 @@ def create_route():
   payload = request.get_json()
   print(payload)
   new_route = models.Route.create(
-    user_id=payload['user_id'],
+    user_id=current_user.id,
     location=payload['location'], 
     length=payload['length'], 
     skill_level=payload['skill_level'],

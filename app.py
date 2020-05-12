@@ -28,7 +28,7 @@ login_manager.init_app(app)
 def load_user(user_id):
   try:
     print("loading the following user")
-    user = models.User.get_by_id(user_id) #changed this
+    user = models.User.get_by_id(user_id) 
     return user 
   except models.DoesNotExist: 
     return None
