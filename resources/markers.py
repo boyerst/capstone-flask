@@ -107,16 +107,42 @@ def update_marker(id):
 
 
 #DELETE /markers/id
-@markers.route('/<id>', methods=['DELETE']) 
-def delete_route(id):
-  delete_query = models.Marker.delete().where(models.Marker.id == id)
-  num_of_rows_deleted = delete_query.execute()
-  print(num_of_rows_deleted)
+@markers.route('/<id>', methods=['DELETE'])
+@login_required
+def delete_marker(id):
+  marker_to_delete = models.Marker.get_by_id(id)
+  if marker_to_delete.route_id.user_id.id == current_user.id:
+    marker_to_delete.delete_instance()
+    return jsonify(
+      data={}, 
+      message = f"Successfully deleted Marker with id {id}",
+      status=200
+    ), 200
+  else: 
+    return jsonify(
+    data={
+      'error': '403 Forbidden'
+    },
+    message="Marker poster's id does not match current user's id. Markers can only be deleted by their posters.",
+    status=403
+    ), 403
   return jsonify(
     data={},
-    message="Successfully deleted marker with id {}".format(num_of_rows_deleted, id),
+    message="Successfully deleted {} marker with id {}".format(num_of_rows_deleted, id),
     status=200
   ), 200
+
+
+# @markers.route('/<id>', methods=['DELETE']) 
+# def delete_route(id):
+#   delete_query = models.Marker.delete().where(models.Marker.id == id)
+#   num_of_rows_deleted = delete_query.execute()
+#   print(num_of_rows_deleted)
+#   return jsonify(
+#     data={},
+#     message="Successfully deleted marker with id {}".format(num_of_rows_deleted, id),
+#     status=200
+#   ), 200
 
 
 
