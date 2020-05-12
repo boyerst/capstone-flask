@@ -16,6 +16,7 @@ markers = Blueprint('markers', 'markers')
 
 
 
+
 class CustomJsonEncoder(json.JSONEncoder):
   def default(self, obj):
     if isinstance(obj, Decimal):
@@ -37,7 +38,7 @@ class CustomJsonEncoder(json.JSONEncoder):
 #   }), 200
 
 
-#SHOW /routes/id ORIGINAL
+#SHOW /markers/id 
 @markers.route('/<id>', methods=['GET'])
 def show_marker(id):
   marker = models.Marker.get_by_id(id)
@@ -105,7 +106,7 @@ def update_marker(id):
   ), 200
 
 
-#DELETE /route/id
+#DELETE /markers/id
 @markers.route('/<id>', methods=['DELETE']) 
 def delete_route(id):
   delete_query = models.Marker.delete().where(models.Marker.id == id)
@@ -127,6 +128,7 @@ def marker_index():
   print(marker_dicts)
   return json.dumps(marker_dicts, cls=CustomJsonEncoder), 200
  
+
 
 
 
