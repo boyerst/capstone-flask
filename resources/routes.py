@@ -16,6 +16,7 @@ routes = Blueprint('routes', 'routes')
 
 #INDEX /routes
 @routes.route('/', methods=['GET'])
+@login_required
 def routes_index():
   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes] 
   for route_dict in current_user_route_dicts:
@@ -55,6 +56,7 @@ def show_route(id):
 
 #CREATE /routes/
 @routes.route('/', methods=['POST'])
+@login_required
 def create_route():
   payload = request.get_json()
   print(payload)
@@ -97,16 +99,55 @@ def update_route(id):
 
 
 #DELETE /route/id
-@routes.route('/<id>', methods=['DELETE']) 
+@routes.route('/<id>', methods=['DELETE'])
+@login_required
 def delete_route(id):
-  delete_query = models.Route.delete().where(models.Route.id == id)
-  num_of_rows_deleted = delete_query.execute()
-  print(num_of_rows_deleted)
+  route_to_delete = models.Route.get_by_id(id)
+  if route_to_delete.user_id.id == current_user.id:
+    route_to_delete.delete_instance()
+    return jsonify(
+      data={}, 
+      message = f"Successfully deleted route with id {id}",
+      status=200
+    ), 200
+  else: 
+    return jsonify(
+    data={
+      'error': '403 Forbidden'
+    },
+    message="Route poster's id does not match current user's id. User can only delete their own routes.",
+    status=403
+    ), 403
   return jsonify(
     data={},
-    message="Successfully deleted route with id {}".format(num_of_rows_deleted, id),
+    message="Successfully deleted {} route with id {}".format(num_of_rows_deleted, id),
     status=200
   ), 200
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @routes.route('/<id>', methods=['DELETE']) 
+# def delete_route(id):
+#   delete_query = models.Route.delete().where(models.Route.id == id)
+#   num_of_rows_deleted = delete_query.execute()
+#   print(num_of_rows_deleted)
+#   return jsonify(
+#     data={},
+#     message="Successfully deleted route with id {}".format(num_of_rows_deleted, id),
+#     status=200
+#   ), 200
 
 
 
