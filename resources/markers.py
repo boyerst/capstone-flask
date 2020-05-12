@@ -91,21 +91,34 @@ def create_marker():
 @login_required
 def update_marker(id):
   payload = request.get_json()
-  update_query = models.Marker.update(
-    route_id=payload['route_id'],
-    latitude=payload['latitude'],
-    longitude=payload['longitude'],
-    image=payload['image'],
-    description=payload['description']
-  ).where(models.Marker.id == id)
-  num_of_rows_modified = update_query.execute()
-  updated_marker = models.Marker.get_by_id(id) 
-  updated_marker_dict = model_to_dict(updated_marker)
-  return jsonify(
-    data=updated_route_dict,
-    message=f"Successfully updated route with id {id}",
-    status=200
-  ), 200
+  marker_to_update = models.Marker.get_by_id(id)
+  if marker_to_update.route_id.user_id.id == current_user.id:
+    if 'latitude' in payload:
+      marker_to_update.latitude = payload['latitude'] 
+    if 'longitude' in payload:
+      marker_to_update.longitude = payload['longitude'] 
+    if 'image' in payload:
+      marker_to_update.image = payload['image'] 
+    if 'description' in payload:
+      marker_to_update.description = payload['description'] 
+    marker_to_update.save()
+    updated_marker_dict = model_to_dict(marker_to_update)
+    # updated_marker_dict['route_id'.'user_id'].pop('password') #how to target password?
+    return jsonify(
+      data=updated_marker_dict,
+      message=f"Successfully updated marker with id {id}",
+      status=200
+    ), 200
+  else: 
+    return jsonify(
+    data={
+      'error': '403 Forbidden'
+    },
+    message="Marker poster's id does not match current user's id. Markers can only be updated by their posters.",
+    status=403
+    ), 403
+
+
 
 
 #DELETE /markers/id
