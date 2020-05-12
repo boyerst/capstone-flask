@@ -78,23 +78,56 @@ def create_route():
 
 #UPDATE /routes/id
 @routes.route('/<id>', methods=['PUT'])
+@login_required
 def update_route(id):
   payload = request.get_json()
-  update_query = models.Route.update(
-    user_id=payload['user_id'],
-    location=payload['location'], 
-    length=payload['length'], 
-    skill_level=payload['skill_level'],
-    comments=payload['comments']
-  ).where(models.Route.id == id)
-  num_of_rows_modified = update_query.execute()
-  updated_route = models.Route.get_by_id(id) 
-  updated_route_dict = model_to_dict(updated_route)
-  return jsonify(
-    data=updated_route_dict,
-    message=f"Successfully updated route with id {id}",
-    status=200
-  ), 200
+  route_to_update = models.Route.get_by_id(id)
+  if route_to_update.user_id.id == current_user.id:
+    if 'location' in payload:
+      route_to_update.location = payload['location'] 
+    if 'length' in payload:
+      route_to_update.length = payload['length'] 
+    if 'skill_level' in payload:
+      route_to_update.skill_level = payload['skill_level'] 
+    if 'comments' in payload:
+      route_to_update.comments = payload['comments'] 
+    route_to_update.save()
+    updated_route_dict = model_to_dict(route_to_update)
+    updated_route_dict['user_id'].pop('password')
+    return jsonify(
+      data=updated_route_dict,
+      message=f"Successfully updated route with id {id}",
+      status=200
+    ), 200
+  else: 
+    return jsonify(
+    data={
+      'error': '403 Forbidden'
+    },
+    message="Route poster's id does not match current user's id. Routes can only be updated by their posters.",
+    status=403
+    ), 403
+
+
+# @routes.route('/<id>', methods=['PUT'])
+# @login_required
+# def update_route(id):
+#   payload = request.get_json()
+#   update_query = models.Route.update(
+#     user_id=payload['user_id'],
+#     location=payload['location'], 
+#     length=payload['length'], 
+#     skill_level=payload['skill_level'],
+#     comments=payload['comments']
+#   ).where(models.Route.id == id)
+#   num_of_rows_modified = update_query.execute()
+#   updated_route = models.Route.get_by_id(id) 
+#   updated_route_dict = model_to_dict(updated_route)
+#   return jsonify(
+#     data=updated_route_dict,
+#     message=f"Successfully updated route with id {id}",
+#     status=200
+#   ), 200
 
 
 
@@ -107,7 +140,7 @@ def delete_route(id):
     route_to_delete.delete_instance()
     return jsonify(
       data={}, 
-      message = f"Successfully deleted route with id {id}",
+      message = f"Successfully deleted Route with id {id}",
       status=200
     ), 200
   else: 
@@ -115,7 +148,7 @@ def delete_route(id):
     data={
       'error': '403 Forbidden'
     },
-    message="Route poster's id does not match current user's id. User can only delete their own routes.",
+    message="Route poster's id does not match current user's id. Routes can only be deleted by their posters.",
     status=403
     ), 403
   return jsonify(
@@ -124,30 +157,6 @@ def delete_route(id):
     status=200
   ), 200
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @routes.route('/<id>', methods=['DELETE']) 
-# def delete_route(id):
-#   delete_query = models.Route.delete().where(models.Route.id == id)
-#   num_of_rows_deleted = delete_query.execute()
-#   print(num_of_rows_deleted)
-#   return jsonify(
-#     data={},
-#     message="Successfully deleted route with id {}".format(num_of_rows_deleted, id),
-#     status=200
-#   ), 200
 
 
 

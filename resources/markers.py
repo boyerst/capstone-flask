@@ -66,6 +66,7 @@ def show_marker(id):
 
 #CREATE /markers/
 @markers.route('/', methods=['POST'])
+@login_required
 def create_marker():
   payload = request.get_json()
   print(payload)
@@ -87,6 +88,7 @@ def create_marker():
 
 #UPDATE /markers/id
 @markers.route('/<id>', methods=['PUT'])
+@login_required
 def update_marker(id):
   payload = request.get_json()
   update_query = models.Marker.update(
@@ -132,17 +134,6 @@ def delete_marker(id):
     status=200
   ), 200
 
-
-# @markers.route('/<id>', methods=['DELETE']) 
-# def delete_route(id):
-#   delete_query = models.Marker.delete().where(models.Marker.id == id)
-#   num_of_rows_deleted = delete_query.execute()
-#   print(num_of_rows_deleted)
-#   return jsonify(
-#     data={},
-#     message="Successfully deleted marker with id {}".format(num_of_rows_deleted, id),
-#     status=200
-#   ), 200
 
 
 
