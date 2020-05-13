@@ -24,18 +24,18 @@ class CustomJsonEncoder(json.JSONEncoder):
     return super(CustomJsonEncoder, self).default(obj)
 
 
-#INDEX /markers
-# @markers.route('/', methods=['GET'])
-# def markers_index():
-#   current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.markers] 
-#   for marker_dict in current_user_marker_dicts:
-#     marker_dict['user_id'].pop('password')
-#   print(current_user_marker_dicts)
-#   return jsonify({
-#     'data': current_user_marker_dicts,
-#     'message': f"Successfully found {len(current_user_marker_dicts)} markers",
-#     'status': 200
-#   }), 200
+# INDEX /markers
+@markers.route('/', methods=['GET'])
+def markers_index():
+  current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.markers] 
+  # for marker_dict in current_user_marker_dicts:
+  #   marker_dict['user_id'].pop('password')
+  print(current_user_marker_dicts)
+  return jsonify({
+    'data': current_user_marker_dicts,
+    'message': f"Successfully found {len(current_user_marker_dicts)} markers",
+    'status': 200
+  }), 200
 
 
 #SHOW /markers/id 
@@ -45,23 +45,24 @@ def show_marker(id):
   if not current_user.is_authenticated:
     return jsonify(
       data={
-        'user_id': route.user_id,
-        'length': route.length,
-        'skill_level': route.skill_level,
-        'comments': route.comments,
+        'route_id': marker.route_id,
+        'latitude': marker.latitude,
+        'longitude': marker.longitude,
+        'image': marker.image,
+        'description': marker.description
       },
-      message="Registered users can see more info about this route",
+      message="Registered users can see more info about this marker",
       status=200
     ), 200
   else:
     marker_dict = model_to_dict(marker)
-    # marker_dict['user_id'].pop('password')
-    return jsonify(
-      data=marker_dict, 
-      message=f"Found route with id {id}",
-      status=200
-      ), 200
-
+    print(marker_dict)
+    # marker_dict['user_id'].pop('password')      #code message here
+    return (
+      json.dumps(marker_dict, cls=CustomJsonEncoder)
+    ), 200
+      # message=f"Found marker with id {id}",
+   
 
 
 #CREATE /markers/
