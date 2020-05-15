@@ -1,16 +1,20 @@
 import models
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, json
 
 from playhouse.shortcuts import model_to_dict 
-
+from decimal import Decimal
 
 from flask_login import current_user, login_required
 
 routes = Blueprint('routes', 'routes')
 
 
-
+class CustomJsonEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, Decimal):
+      return float(obj)
+    return super(CustomJsonEncoder, self).default(obj)
 
 
 
@@ -37,6 +41,7 @@ def show_route(id):
   if not current_user.is_authenticated:
     return jsonify(
       data={
+        'markers': route.markers,
         'user_id': route.user_id,
         'length': route.length,
         'skill_level': route.skill_level,
@@ -47,14 +52,30 @@ def show_route(id):
     ), 200
   else:
     route_dict = model_to_dict(route)
+    marker_arr=[]
+   
+    for marker in route.markers:
+       #can pop things our before adding to route dict
+      marker_arr.append(model_to_dict(marker))
+    print(route_dict)
+    route_dict['marker'] = marker_arr
     route_dict['user_id'].pop('password')
-    return jsonify(
-      data=route_dict, 
-      message=f"Found route with id {id}",
-      status=200
-      ), 200
+    return (
+      json.dumps(route_dict, cls=CustomJsonEncoder)
+    ), 200
+      # data=route_dict, 
+      # message=f"Found route with id {id}",
+      # status=200
+      # ), 200
 
-
+ # else:
+ #    marker_dict = model_to_dict(marker)
+ #    print(marker_dict)
+ #    # marker_dict['user_id'].pop('password')      #code message here
+ #    return (
+ #      json.dumps(marker_dict, cls=CustomJsonEncoder)
+ #    ), 200
+      # message=f"Found marker with id {id}
 
 #CREATE /routes/
 @routes.route('/', methods=['POST'])

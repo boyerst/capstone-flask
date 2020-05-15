@@ -25,17 +25,24 @@ class CustomJsonEncoder(json.JSONEncoder):
 
 
 # INDEX /markers
-@markers.route('/', methods=['GET'])
-def markers_index():
-  current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.markers] 
-  # for marker_dict in current_user_marker_dicts:
-  #   marker_dict['user_id'].pop('password')
-  print(current_user_marker_dicts)
-  return jsonify({
-    'data': current_user_marker_dicts,
-    'message': f"Successfully found {len(current_user_marker_dicts)} markers",
-    'status': 200
-  }), 200
+# @markers.route('/', methods=['GET'])
+# @login_required
+# def markers_index():
+#   #get routes first then convert to dict
+#   # current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.markers] 
+#   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes]
+#   #this will give you routes, so from these find the in current_user_routes.routes
+#   current_user_marker_dicts = [model_to_dict(marker) for marker in current_user.current_user_route_dicts] 
+#   # current_user_marker_dicts = [model_to_dict(marker) for marker in current_user_route_dicts.markers] 
+#   # current_user_marker_dicts = [model_to_dict(route) for route in current_user.routes for marker in current_user_route_dicts] 
+#   for marker_dict in current_user_marker_dicts:
+#     marker_dict['user_id'].pop('password')
+#   print(current_user_marker_dicts)
+#   return jsonify({
+#     'data': current_user_marker_dicts,
+#     'message': f"Successfully found {len(current_user_marker_dicts)} markers",
+#     'status': 200
+#   }), 200
 
 
 #SHOW /markers/id 
@@ -65,7 +72,36 @@ def show_marker(id):
    
 
 
-#CREATE /markers/
+#CREATE routes/route_id/markers/
+# @markers.route('/<id>/markers/', methods=['POST'])
+# @login_required
+# def create_marker():
+#   payload = request.get_json()
+#   print(payload)
+#   new_marker = models.Marker.create(
+#     route_id=route_id, #how to properly set this to the route id that it belongs to
+#     latitude=payload['latitude'],
+#     longitude=payload['longitude'],
+#     image=payload['image'],
+#     description=payload['description']
+#     )
+#   marker_dict=model_to_dict(new_marker)
+#   print(new_marker)
+#   return jsonify(
+#     data=marker_dict, 
+#     message = 'successfully created marker',
+#     status=201
+#     ), 201
+
+# resources :routes do
+#   resources :markers
+# end
+
+# /routes/route_id/markers
+
+
+
+# #CREATE /markers/
 @markers.route('/', methods=['POST'])
 @login_required
 def create_marker():
@@ -159,7 +195,6 @@ def marker_index():
   print(marker_dicts)
   return json.dumps(marker_dicts, cls=CustomJsonEncoder), 200
  
-
 
 
 
