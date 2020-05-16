@@ -32,6 +32,18 @@ def routes_index():
     'status': 200
   }), 200
 
+#ALL ROUTES /routes/all
+@routes.route('/all', methods=['GET'])
+@login_required
+def all_routes_index():
+  routes = models.Route.select()
+  route_dicts = [ model_to_dict(route) for route in routes ]
+  print(route_dicts)
+  return jsonify({
+    'data': route_dicts,
+    'message': f"Successfully found {len(route_dicts)} routes",
+    'status': 200
+  }), 200
 
 
 #SHOW /routes/id
@@ -43,7 +55,9 @@ def show_route(id):
       data={
         'markers': route.markers,
         'user_id': route.user_id,
+        'location': route.location,
         'length': route.length,
+        'images': route.images,
         'skill_level': route.skill_level,
         'comments': route.comments,
       },
@@ -52,30 +66,19 @@ def show_route(id):
     ), 200
   else:
     route_dict = model_to_dict(route)
-    marker_arr=[]
+    markers_arr=[]
    
     for marker in route.markers:
        #can pop things our before adding to route dict
-      marker_arr.append(model_to_dict(marker))
+      markers_arr.append(model_to_dict(marker))
     print(route_dict)
-    route_dict['marker'] = marker_arr
+    route_dict['marker'] = markers_arr
     route_dict['user_id'].pop('password')
     return (
       json.dumps(route_dict, cls=CustomJsonEncoder)
     ), 200
-      # data=route_dict, 
-      # message=f"Found route with id {id}",
-      # status=200
-      # ), 200
 
- # else:
- #    marker_dict = model_to_dict(marker)
- #    print(marker_dict)
- #    # marker_dict['user_id'].pop('password')      #code message here
- #    return (
- #      json.dumps(marker_dict, cls=CustomJsonEncoder)
- #    ), 200
-      # message=f"Found marker with id {id}
+
 
 #CREATE /routes/
 @routes.route('/', methods=['POST'])
@@ -87,6 +90,7 @@ def create_route():
     user_id=current_user.id,
     location=payload['location'], 
     length=payload['length'], 
+    images=payload['images'],
     skill_level=payload['skill_level'],
     comments=payload['comments'])
   route_dict=model_to_dict(new_route)
@@ -110,6 +114,8 @@ def update_route(id):
       route_to_update.location = payload['location'] 
     if 'length' in payload:
       route_to_update.length = payload['length'] 
+    if 'images' in payload:
+      route_to_update.images = payload['images']
     if 'skill_level' in payload:
       route_to_update.skill_level = payload['skill_level'] 
     if 'comments' in payload:
@@ -166,10 +172,10 @@ def delete_route(id):
 
 
 #ALL ROUTES /routes/all
-@routes.route('/all', methods=['GET'])
-def route_index():
-  routes = models.Route.select()
-  route_dicts = [ model_to_dict(route) for route in routes ]
+# @routes.route('/all', methods=['GET'])
+# def route_index():
+#   routes = models.Route.select()
+#   route_dicts = [ model_to_dict(route) for route in routes ]
 
-  print(route_dicts)
-  return jsonify(route_dicts), 200
+#   print(route_dicts)
+#   return jsonify(route_dicts), 200

@@ -24,6 +24,7 @@ class Route(Model):
   length = IntegerField()
   skill_level = IntegerField()
   comments = CharField()
+  images = TextField()
   created_at: DateTimeField(default=datetime.datetime.now)
 
   class Meta: 
@@ -35,7 +36,6 @@ class Marker(Model):
   route_id = ForeignKeyField(Route, backref='markers')
   latitude = DecimalField()
   longitude = DecimalField()
-  image = TextField()
   description = CharField()
   
 
