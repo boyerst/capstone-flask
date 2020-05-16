@@ -111,7 +111,6 @@ def create_marker():
     route_id=payload['route_id'],
     latitude=payload['latitude'],
     longitude=payload['longitude'],
-    image=payload['image'],
     description=payload['description']
     )
   marker_dict=model_to_dict(new_marker)
@@ -134,8 +133,6 @@ def update_marker(id):
       marker_to_update.latitude = payload['latitude'] 
     if 'longitude' in payload:
       marker_to_update.longitude = payload['longitude'] 
-    if 'image' in payload:
-      marker_to_update.image = payload['image'] 
     if 'description' in payload:
       marker_to_update.description = payload['description'] 
     marker_to_update.save()
