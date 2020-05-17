@@ -1,4 +1,4 @@
 #### App Routes
 
 
-[Imgur](https://i.imgur.com/pXN7uzT.png) MOVE TO FLASK
+![Models and Routes](https://i.imgur.com/FbhoDzH.png) 
