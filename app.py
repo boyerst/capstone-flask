@@ -1,5 +1,6 @@
 
-from flask import Flask, jsonify
+import os
+from flask import Flask, jsonify, g
 
 from resources.routes import routes
 from resources.users import users
@@ -57,6 +58,19 @@ app.register_blueprint(users, url_prefix='/api/v1/users')
 
 
 
+@app.before_request 
+def before_request():
+  print("you should see this before each request") 
+  g.db = models.DATABASE
+  g.db.connect()
+
+@app.after_request 
+def after_request(response):
+  print("you should see this after each request") #
+  g.db.close()
+  return response 
+       
+
 
 
 @app.route('/')
@@ -67,6 +81,10 @@ def test():
 def get_json():
   return jsonify(['jsonify', 'working'])
 
+  
+if 'ON_HEROKU' in os.environ: 
+  print('\non heroku!')
+  models.initialize()
 
 
 if __name__ == '__main__':
