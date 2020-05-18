@@ -47,9 +47,9 @@ def unauthorized():
 
 
 
-CORS(routes, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(markers, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(routes, origins=['http://localhost:3000', 'https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 
 
 app.register_blueprint(routes, url_prefix='/api/v1/routes')
@@ -81,7 +81,7 @@ def test():
 def get_json():
   return jsonify(['jsonify', 'working'])
 
-  
+
 if 'ON_HEROKU' in os.environ: 
   print('\non heroku!')
   models.initialize()
