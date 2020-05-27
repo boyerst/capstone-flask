@@ -60,9 +60,6 @@ app.register_blueprint(routes, url_prefix='/api/v1/routes')
 app.register_blueprint(markers, url_prefix='/api/v1/markers')
 app.register_blueprint(users, url_prefix='/api/v1/users')
 
-app.get("/*", function (req, res) {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-})
 
 
 @app.before_request 
