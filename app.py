@@ -16,9 +16,9 @@ from flask_login import LoginManager
 DEBUG=True 
 PORT=8000 
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
-app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
+# app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = "Secret Time."
 
@@ -28,6 +28,16 @@ login_manager.init_app(app)
 
 
 
+# AUTH
+@login_manager.unauthorized_handler
+def unauthorized():
+  return jsonify(
+    data={
+      'error': "User not logged in"
+    },
+    message='You must be logged in to access that resource',
+    status=401
+  ), 401
 
 
 # SESSION
@@ -40,16 +50,6 @@ def load_user(user_id):
   except models.DoesNotExist: 
     return None
 
-# AUTH
-@login_manager.unauthorized_handler
-def unauthorized():
-  return jsonify(
-    data={
-      'error': "User not logged in"
-    },
-    message='You must be logged in to access that resource',
-    status=401
-  ), 401
 
 
 
