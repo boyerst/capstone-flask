@@ -18,6 +18,9 @@ PORT=8000
 
 app = Flask(__name__)
 
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
+
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = "Secret Time."
