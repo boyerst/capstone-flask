@@ -6,7 +6,7 @@ from resources.routes import routes
 from resources.users import users
 from resources.markers import markers
 
-# import logging
+import logging
 import json, commands, requests, sys
 
 import models
