@@ -6,8 +6,8 @@ from resources.routes import routes
 from resources.users import users
 from resources.markers import markers
 
-import logging
-import json, commands, requests, sys
+# import logging
+# import json, commands, requests, sys
 
 import models
 
@@ -21,10 +21,10 @@ PORT=8000
 
 app = Flask(__name__)
 
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
+# app.logger.addHandler(logging.StreamHandler(sys.stdout))
+# app.logger.setLevel(logging.ERROR)
 
-app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
+# app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = "Secret Time."
 
