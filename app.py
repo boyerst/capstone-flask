@@ -89,13 +89,13 @@ def after_request(response):
 
 
 
-# @app.route('/')
-# def test():
-#   return 'test'
+@app.route('/')
+def test():
+  return 'test'
 
-# @app.route('/test_json')
-# def get_json():
-#   return jsonify(['jsonify', 'working'])
+@app.route('/test_json')
+def get_json():
+  return jsonify(['jsonify', 'working'])
 
 
 if 'ON_HEROKU' in os.environ: 
