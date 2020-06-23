@@ -21,10 +21,10 @@ PORT=8000
 
 app = Flask(__name__)
 
-# app.logger.addHandler(logging.StreamHandler(sys.stdout))
-# app.logger.setLevel(logging.ERROR)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
-# app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
+app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = "Secret Time."
 
@@ -37,26 +37,26 @@ print(app.secret_key)
 
 
 
-# # SESSION
-# @login_manager.user_loader
-# def load_user(user_id):
-#   try:
-#     print("loading the following user")
-#     user = models.User.get_by_id(user_id) 
-#     return user 
-#   except models.DoesNotExist: 
-#     return None
+# SESSION
+@login_manager.user_loader
+def load_user(user_id):
+  try:
+    print("loading the following user")
+    user = models.User.get_by_id(user_id) 
+    return user 
+  except models.DoesNotExist: 
+    return None
 
-# # AUTH
-# @login_manager.unauthorized_handler
-# def unauthorized():
-#   return jsonify(
-#     data={
-#       'error': "User not logged in"
-#     },
-#     message='You must be logged in to access that resource',
-#     status=401
-#   ), 401
+# AUTH
+@login_manager.unauthorized_handler
+def unauthorized():
+  return jsonify(
+    data={
+      'error': "User not logged in"
+    },
+    message='You must be logged in to access that resource',
+    status=401
+  ), 401
 
 
 
