@@ -1,20 +1,20 @@
 
 import os
 from flask import Flask, jsonify, g
+from flask_login import LoginManager
+from resources.users import users
 
 from resources.routes import routes
-from resources.users import users
 from resources.markers import markers
+
+from flask_cors import CORS
 
 # import logging
 # import json, commands, requests, sys
 
 import models
 
-from flask_cors import CORS
 
-
-from flask_login import LoginManager
 
 DEBUG=True 
 PORT=8000 
