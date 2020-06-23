@@ -19,7 +19,7 @@ from flask_login import LoginManager
 DEBUG=True 
 PORT=8000 
 
-app = Flask(__name__ static_url_path="")
+app = Flask(__name__, static_url_path="")
 
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)
