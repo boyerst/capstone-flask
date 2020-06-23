@@ -48,15 +48,15 @@ def load_user(user_id):
     return None
 
 # AUTH
-@login_manager.unauthorized_handler
-def unauthorized():
-  return jsonify(
-    data={
-      'error': "User not logged in"
-    },
-    message='You must be logged in to access that resource',
-    status=401
-  ), 401
+# @login_manager.unauthorized_handler
+# def unauthorized():
+#   return jsonify(
+#     data={
+#       'error': "User not logged in"
+#     },
+#     message='You must be logged in to access that resource',
+#     status=401
+#   ), 401
 
 
 
