@@ -97,7 +97,7 @@ def logout():
 
 
 #ALL(Testing Route) /users/all 
-@users.route('/all/', methods=['GET'])
+@users.route('/all', methods=['GET'])
 def user_index():
   users = models.User.select()
   user_dicts = [ model_to_dict(user) for user in users ]
