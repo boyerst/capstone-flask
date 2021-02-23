@@ -14,7 +14,7 @@ from flask_cors import CORS
 
 import models
 
-
+TESTING
 
 DEBUG=True 
 PORT=8000 
