@@ -61,9 +61,9 @@ def unauthorized():
 
 
 
-CORS(routes, origins=['http://localhost:3000', 'https://wmattracks.herokuapp.com'], supports_credentials=True)
-CORS(markers, origins=['http://localhost:3000','https://wmattracks.herokuapp.com'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000','https://wmattracks.herokuapp.com'], supports_credentials=True)
+# CORS(routes, origins=['http://localhost:3000', 'https://wmattracks.herokuapp.com'], supports_credentials=True)
+# CORS(markers, origins=['http://localhost:3000','https://wmattracks.herokuapp.com'], supports_credentials=True)
+# CORS(users, origins=['http://localhost:3000','https://wmattracks.herokuapp.com'], supports_credentials=True)
 
 
 app.register_blueprint(users, url_prefix='/api/v1/users')
