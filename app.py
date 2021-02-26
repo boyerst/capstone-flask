@@ -56,6 +56,9 @@ def unauthorized():
   ), 401
 
 
+@app.errorhandler(401)
+def custom_401(error):
+    return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
 
 
 
