@@ -37,6 +37,16 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+# SESSION
+@login_manager.user_loader
+def load_user(id):
+  try:
+    print("loading the following user")
+    return models.User.get_by_id(id) 
+  except models.DoesNotExist: 
+    return None
+
+
 # AUTH
 @login_manager.unauthorized_handler
 def unauthorized():
@@ -47,16 +57,6 @@ def unauthorized():
     message='You must be logged in to access that resource',
     status=401
   ), 401
-
-# SESSION
-@login_manager.user_loader
-def load_user(user_id):
-  try:
-    print("loading the following user")
-    return models.User.get_by_id(user_id) 
-  except models.DoesNotExist: 
-    return None
-
 
 
 
