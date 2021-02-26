@@ -28,13 +28,15 @@ app = Flask(__name__)
 
 
 
+
+app.secret_key = "HOLYSHIT"
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
 print("Here is the app secret_key:")
 print(app.secret_key)
 
-app.secret_key = "HOLYSHIT"
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 # SESSION
