@@ -1,18 +1,19 @@
 
-import os
 from flask import Flask, jsonify, g
-from flask_login import LoginManager
+import os
+
 from resources.users import users
 
 from resources.routes import routes
 from resources.markers import markers
 
+import models
 from flask_cors import CORS
 
+from flask_login import LoginManager
 # import logging
 # import json, commands, requests, sys
 
-import models
 
 
 
