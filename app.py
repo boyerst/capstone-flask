@@ -15,6 +15,9 @@ from flask_cors import CORS
 import models
 
 
+app.secret_key = "Secret Time"
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 DEBUG=True 
 PORT=8000 
@@ -26,9 +29,6 @@ app = Flask(__name__)
 
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
-app.secret_key = "Secret Time"
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 print("Here is the app secret_key:")
