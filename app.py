@@ -32,10 +32,10 @@ print("Here is the app secret_key:")
 print(app.secret_key)
 
 
-app.secret_key = "Secret Time"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+app.secret_key = "Secret Time"
 
 # SESSION
 @login_manager.user_loader
