@@ -19,6 +19,10 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
+app.secret_key = "secret squirrel"
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 DEBUG=True 
 PORT=8000 
@@ -32,10 +36,6 @@ PORT=8000
 
 
 
-app.secret_key = os.urandom(24)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 print("Here is the app secret_key:")
