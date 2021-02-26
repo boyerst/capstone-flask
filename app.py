@@ -19,7 +19,7 @@ PORT=8000
 app = Flask(__name__)
 
 
-app.secret_key = "super secret"
+app.secret_key = 'secret time'
 login_manager = LoginManager()
 login_manager.init_app(app)
 

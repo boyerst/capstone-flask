@@ -1,6 +1,6 @@
 import models
 
-from flask import Blueprint, request, jsonify, json, session
+from flask import Blueprint, request, jsonify, json
 
 from playhouse.shortcuts import model_to_dict 
 from decimal import Decimal
