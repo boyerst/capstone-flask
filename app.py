@@ -1,12 +1,7 @@
 
-from flask import Flask
-from flask import g
-from flask import jsonify
+from flask import Flask, g, jsonify
 import os
-
-
 from resources.users import users
-
 from resources.routes import routes
 from resources.markers import markers
 
@@ -41,8 +36,8 @@ login_manager.init_app(app)
 
 
 
-# print("Here is the app secret_key:")
-# print(app.secret_key)
+print("Here is the app secret_key:")
+print(app.secret_key)
 
 
 
