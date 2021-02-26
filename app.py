@@ -19,7 +19,8 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
-  app.secret_key = "secret squirrel"
+
+app.secret_key = "secret squirrel"
 
 
 login_manager = LoginManager()
