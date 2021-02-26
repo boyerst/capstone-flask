@@ -4,7 +4,7 @@ from flask import g
 from flask import jsonify
 import os
 
-from flask import make_response, Response
+
 from resources.routes import routes
 from resources.markers import markers
 
@@ -33,7 +33,7 @@ app = Flask(__name__)
 
 
 
-app.secret_key = "HOLYSHIT"
+app.secret_key = "holyshit"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
