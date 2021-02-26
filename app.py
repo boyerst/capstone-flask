@@ -20,9 +20,9 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 app.secret_key = "secret squirrel"
-app.config['SESSION_TYPE'] = 'filesystem'
+# app.config['SESSION_TYPE'] = 'filesystem'
 
-login_manager = LoginManager()
+login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 DEBUG=True 
