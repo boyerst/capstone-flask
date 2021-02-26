@@ -29,8 +29,8 @@ login_manager.init_app(app)
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 
-# print("Here is the app secret_key:")
-# print(app.secret_key)
+print("Here is the app secret_key:")
+print(app.secret_key)
 
 
 
