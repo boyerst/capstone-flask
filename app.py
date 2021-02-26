@@ -19,7 +19,7 @@ from flask_login import LoginManager
 
 
 
-SECRET_KEY = "holyshit"
+
 app.secret_key = "holyshit"
 DEBUG=True 
 PORT=8000 
