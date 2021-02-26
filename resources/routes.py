@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify, json
 from playhouse.shortcuts import model_to_dict 
 from decimal import Decimal
 
-from flask_login import current_user, login_required,login_user, logout_user
+from flask_login import current_user, login_required
 
 routes = Blueprint('routes', 'routes')
 
