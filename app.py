@@ -32,7 +32,7 @@ PORT=8000
 
 
 
-app.secret_key = "super secret"
+app.secret_key = os.urandom(24)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
