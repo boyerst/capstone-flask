@@ -1,10 +1,10 @@
 
-from flask import Flask, g, jsonify
 import os
+from flask import Flask, g, jsonify
 from resources.routes import routes
 from resources.markers import markers
 from resources.users import users
-from flask import make_response, Response
+# from flask import make_response, Response
 import models
 
 from flask_cors import CORS
@@ -60,9 +60,9 @@ def unauthorized():
 
 
 
-CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 
 
 app.register_blueprint(users, url_prefix='/api/v1/users')
