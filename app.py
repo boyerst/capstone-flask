@@ -5,18 +5,21 @@ from flask import jsonify
 import os
 
 
+from resources.users import users
+
 from resources.routes import routes
 from resources.markers import markers
 
-from resources.users import users
-
 import models
+
 from flask_cors import CORS
 
 from flask_login import LoginManager
 # import logging
 # import json, commands, requests, sys
 
+DEBUG=True 
+PORT=8000 
 
 app = Flask(__name__)
 
@@ -26,8 +29,6 @@ app.secret_key = "secret squirrel"
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-DEBUG=True 
-PORT=8000 
 
 
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
@@ -40,8 +41,8 @@ PORT=8000
 
 
 
-print("Here is the app secret_key:")
-print(app.secret_key)
+# print("Here is the app secret_key:")
+# print(app.secret_key)
 
 
 
