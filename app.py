@@ -56,21 +56,21 @@ def unauthorized():
   ), 401
 
 
-@app.errorhandler(401)
-def custom_401(error):
-    return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
+# @app.errorhandler(401)
+# def custom_401(error):
+#     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
 
 
+
+app.register_blueprint(users, url_prefix='/api/v1/users')
+app.register_blueprint(routes, url_prefix='/api/v1/routes')
+app.register_blueprint(markers, url_prefix='/api/v1/markers')
 
 
 CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 
-
-app.register_blueprint(users, url_prefix='/api/v1/users')
-app.register_blueprint(routes, url_prefix='/api/v1/routes')
-app.register_blueprint(markers, url_prefix='/api/v1/markers')
 
 
 
