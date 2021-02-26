@@ -1,9 +1,9 @@
 
 from flask import Flask, g, jsonify
 import os
-from resources.users import users
 from resources.routes import routes
 from resources.markers import markers
+from resources.users import users
 
 import models
 
@@ -18,22 +18,15 @@ PORT=8000
 
 app = Flask(__name__)
 
-app.secret_key = "secret squirrel"
 
-
+app.secret_key = "super secret"
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-
 
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)
 
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
-
-
-
-
 
 
 print("Here is the app secret_key:")
