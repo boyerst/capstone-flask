@@ -32,7 +32,7 @@ PORT=8000
 
 
 
-app.secret_key = "holyshit"
+app.secret_key = "super secret"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
