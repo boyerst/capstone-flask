@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify, json
 from playhouse.shortcuts import model_to_dict 
 from decimal import Decimal
 
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, fresh_login_required
 
 routes = Blueprint('routes', 'routes')
 
@@ -34,7 +34,7 @@ def routes_index():
 
 #ALL ROUTES /routes/all
 @routes.route('/all', methods=['GET'])
-@login_required
+@fresh_login_required
 def all_routes_index():
   routes = models.Route.select()
   route_dicts = [ model_to_dict(route) for route in routes ]

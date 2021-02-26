@@ -61,8 +61,7 @@ def unauthorized():
       'error': "User not logged in"
     },
     message='You must be logged in to access that resource',
-    status=401,
-    print(user_id)
+    status=401
   ), 401
 
 
