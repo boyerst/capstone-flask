@@ -1,11 +1,14 @@
 
-from flask import Flask, jsonify, g
+from flask import Flask
+from flask import g
+from flask import jsonify
 import os
 
-from resources.users import users
 
 from resources.routes import routes
 from resources.markers import markers
+
+from resources.users import users
 
 import models
 from flask_cors import CORS
