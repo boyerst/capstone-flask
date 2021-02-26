@@ -18,11 +18,11 @@ from flask_login import LoginManager
 # import json, commands, requests, sys
 
 
+app = Flask(__name__)
 
 DEBUG=True 
 PORT=8000 
 
-app = Flask(__name__)
 
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)
@@ -38,8 +38,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-print("Here is the app secret_key:")
-print(app.secret_key)
+# print("Here is the app secret_key:")
+# print(app.secret_key)
 
 
 
