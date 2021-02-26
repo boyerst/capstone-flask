@@ -62,10 +62,6 @@ def unauthorized():
 
 
 
-app.register_blueprint(users, url_prefix='/api/v1/users')
-app.register_blueprint(routes, url_prefix='/api/v1/routes')
-app.register_blueprint(markers, url_prefix='/api/v1/markers')
-
 
 CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
@@ -86,6 +82,10 @@ def after_request(response):
   g.db.close()
   return response 
        
+
+app.register_blueprint(users, url_prefix='/api/v1/users')
+app.register_blueprint(routes, url_prefix='/api/v1/routes')
+app.register_blueprint(markers, url_prefix='/api/v1/markers')
 
 
 
