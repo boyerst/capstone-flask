@@ -9,9 +9,9 @@ users = Blueprint('users', 'users')
 
 
 
-@users.route('/', methods=['GET'])
-def test(): 
-  return "user resource hittingf" 
+# @users.route('/', methods=['GET'])
+# def test(): 
+#   return "user resource hittingf" 
 
 
 
