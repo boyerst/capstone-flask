@@ -38,8 +38,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
-# print("Here is the app secret_key:")
-# print(app.secret_key)
+print("Here is the app secret_key:")
+print(app.secret_key)
 
 
 
@@ -61,7 +61,8 @@ def unauthorized():
       'error': "User not logged in"
     },
     message='You must be logged in to access that resource',
-    status=401
+    status=401,
+    print(user_id)
   ), 401
 
 
