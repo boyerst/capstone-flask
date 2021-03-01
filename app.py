@@ -39,7 +39,7 @@ print(app.secret_key)
 def load_user(id):
   try:
     print("loading the following user")
-    return models.User.get_by_id(user_id) 
+    return models.User.get_by_id(id) 
   except models.DoesNotExist: 
     return None
 
