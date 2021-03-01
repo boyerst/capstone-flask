@@ -18,7 +18,7 @@ PORT=8000
 
 app = Flask(__name__)
 
-app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
+# app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = 'secret time'
 login_manager = LoginManager()
@@ -36,7 +36,7 @@ print(app.secret_key)
 
 # SESSION
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(id):
   try:
     print("loading the following user")
     return models.User.get_by_id(user_id) 
