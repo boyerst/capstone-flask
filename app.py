@@ -1,15 +1,15 @@
 
 import os
 from flask import Flask, g, jsonify
+from flask_login import LoginManager
+from resources.users import users
 from resources.routes import routes
 from resources.markers import markers
-from resources.users import users
 # from flask import make_response, Response
-import models
 
 from flask_cors import CORS
+import models
 
-from flask_login import LoginManager
 # import logging
 # import json, commands, requests, sys
 
@@ -18,6 +18,7 @@ PORT=8000
 
 app = Flask(__name__)
 
+app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 app.secret_key = 'secret time'
 login_manager = LoginManager()
@@ -26,7 +27,6 @@ login_manager.init_app(app)
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)
 
-# app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 
 print("Here is the app secret_key:")
@@ -69,6 +69,10 @@ CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'
 
 
 
+app.register_blueprint(users, url_prefix='/api/v1/users')
+app.register_blueprint(routes, url_prefix='/api/v1/routes')
+app.register_blueprint(markers, url_prefix='/api/v1/markers')
+
 
 @app.before_request 
 def before_request():
@@ -82,10 +86,6 @@ def after_request(response):
   g.db.close()
   return response 
        
-
-app.register_blueprint(users, url_prefix='/api/v1/users')
-app.register_blueprint(routes, url_prefix='/api/v1/routes')
-app.register_blueprint(markers, url_prefix='/api/v1/markers')
 
 
 
