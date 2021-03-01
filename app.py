@@ -60,12 +60,15 @@ def unauthorized():
 # def custom_401(error):
 #     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
 
+CORS(routes, origins=['http://localhost:3000',], supports_credentials=True)
+CORS(markers, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 
 
 
-CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
-CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+# CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+# CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+# CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 
 
 
