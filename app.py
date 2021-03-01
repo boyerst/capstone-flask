@@ -36,10 +36,10 @@ print(app.secret_key)
 
 # SESSION
 @login_manager.user_loader
-def load_user(id):
+def load_user(user_id):
   try:
     print("loading the following user")
-    return models.User.get_by_id(id) 
+    return models.User.get_by_id(user_id) 
   except models.DoesNotExist: 
     return None
 
@@ -63,9 +63,9 @@ def unauthorized():
 
 
 
-CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
-CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com'], supports_credentials=True)
+CORS(routes, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com/'], supports_credentials=True)
+CORS(markers, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com/'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000','https://wmat-tracks.herokuapp.com/'], supports_credentials=True)
 
 
 
