@@ -103,7 +103,7 @@ def show_marker(id):
 
 # #CREATE /markers/
 @markers.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_marker():
   payload = request.get_json()
   print(payload)
@@ -124,7 +124,7 @@ def create_marker():
 
 #UPDATE /markers/id
 @markers.route('/<id>', methods=['PUT'])
-# @login_required
+@login_required
 def update_marker(id):
   payload = request.get_json()
   marker_to_update = models.Marker.get_by_id(id)
@@ -157,7 +157,7 @@ def update_marker(id):
 
 #DELETE /markers/id
 @markers.route('/<id>', methods=['DELETE'])
-# @login_required
+@login_required
 def delete_marker(id):
   marker_to_delete = models.Marker.get_by_id(id)
   if marker_to_delete.route_id.user_id.id == current_user.id:
