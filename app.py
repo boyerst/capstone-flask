@@ -1,15 +1,15 @@
 
-import os
 from flask import Flask, g, jsonify
-from flask_login import LoginManager
+import os
 from resources.users import users
 from resources.routes import routes
 from resources.markers import markers
 # from flask import make_response, Response
 
-from flask_cors import CORS
 import models
+from flask_cors import CORS
 
+from flask_login import LoginManager
 # import logging
 # import json, commands, requests, sys
 
@@ -62,9 +62,9 @@ def unauthorized():
 
 
 
+CORS(users, origins=['http://localhost:3000', 'https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(routes, origins=['http://localhost:3000', 'https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 CORS(markers, origins=['http://localhost:3000', 'https://wmat-tracks.herokuapp.com'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000', 'https://wmat-tracks.herokuapp.com'], supports_credentials=True)
 
 
 
