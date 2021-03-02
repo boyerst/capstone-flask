@@ -20,7 +20,7 @@ class CustomJsonEncoder(json.JSONEncoder):
 
 #INDEX /routes
 @routes.route('/', methods=['GET'])
-# @login_required
+@login_required
 def routes_index():
   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes] 
   for route_dict in current_user_route_dicts:
@@ -34,7 +34,7 @@ def routes_index():
 
 #ALL ROUTES /routes/all
 @routes.route('/all', methods=['GET'])
-# @login_required
+@login_required
 def all_routes_index():
   routes = models.Route.select()
   route_dicts = [ model_to_dict(route) for route in routes ]
@@ -82,7 +82,7 @@ def show_route(id):
 
 #CREATE /routes/
 @routes.route('/', methods=['POST'])
-# @login_required
+@login_required
 def create_route():
   payload = request.get_json()
   print(payload)
@@ -105,7 +105,7 @@ def create_route():
 
 #UPDATE /routes/id
 @routes.route('/<id>', methods=['PUT'])
-# @login_required
+@login_required
 def update_route(id):
   payload = request.get_json()
   route_to_update = models.Route.get_by_id(id)
@@ -142,7 +142,7 @@ def update_route(id):
 
 #DELETE /route/id
 @routes.route('/<id>', methods=['DELETE'])
-# @login_required
+@login_required
 def delete_route(id):
   route_to_delete = models.Route.get_by_id(id)
   if route_to_delete.user_id.id == current_user.id:
