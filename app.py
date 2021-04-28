@@ -27,7 +27,6 @@ login_manager.init_app(app)
 # app.logger.addHandler(logging.StreamHandler(sys.stdout))
 # app.logger.setLevel(logging.ERROR)
 
-TESTING
 
 print("Here is the app secret_key:")
 print(app.secret_key)
