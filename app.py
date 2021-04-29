@@ -2,6 +2,10 @@
 import os
 from flask import Flask, g, jsonify
 from flask_login import LoginManager
+
+from flask import UserMixin
+from Flask import current_user
+
 from resources.users import users
 from resources.routes import routes
 from resources.markers import markers
