@@ -50,7 +50,7 @@ def unauthorized():
     data={
       'error': "User not logged in"
     },
-    message='You must be logged in to access that resource',
+    message="You must be logged in to access that resource",
     status=401
   ), 401
 
