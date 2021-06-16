@@ -40,7 +40,7 @@ print(app.secret_key)
 @login_manager.user_loader
 def load_user(user_id):
   try:
-    print("loading the following user")
+    print("loading the following user:")
     return models.User.get_by_id(user_id) 
   except models.DoesNotExist: 
     return None
