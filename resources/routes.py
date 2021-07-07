@@ -20,7 +20,7 @@ class CustomJsonEncoder(json.JSONEncoder):
 
 #INDEX /routes
 @routes.route('/', methods=['GET'])
-@login_required
+# @login_required
 def routes_index():
   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes] 
   for route_dict in current_user_route_dicts:
@@ -34,7 +34,7 @@ def routes_index():
 
 #ALL ROUTES /routes/all
 @routes.route('/all', methods=['GET'])
-@login_required
+# @login_required
 def all_routes_index():
   routes = models.Route.select()
   route_dicts = [ model_to_dict(route) for route in routes ]
