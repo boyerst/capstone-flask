@@ -20,7 +20,7 @@ class CustomJsonEncoder(json.JSONEncoder):
 
 #INDEX /routes
 @routes.route('/', methods=['GET'])
-# @login_required
+@login_required
 def routes_index():
   current_user_route_dicts = [model_to_dict(route) for route in current_user.routes] 
   for route_dict in current_user_route_dicts:
@@ -77,7 +77,7 @@ def show_route(id):
     route_dict['marker'] = markers_arr
     route_dict['user_id'].pop('password')
     return (
-      json.dump(route_dict, cls=CustomJsonEncoder)
+      json.dumps(route_dict, cls=CustomJsonEncoder)
     ), 200
 
 
