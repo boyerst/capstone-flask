@@ -33,6 +33,19 @@ def routes_index():
   }), 200
 
 
+#ALL ROUTES /routes/all
+@routes.route('/all', methods=['GET'])
+# @login_required
+def all_routes_index():
+  routes = models.Route.select()
+  route_dicts = [ model_to_dict(route) for route in routes ]
+  print(route_dicts)
+  return jsonify({
+    'data': route_dicts,
+    'message': f"Successfully found {len(route_dicts)} routes",
+    'status': 200
+  }), 200
+
 
 
 
@@ -64,23 +77,12 @@ def show_route(id):
     route_dict['marker'] = markers_arr
     route_dict['user_id'].pop('password')
     return (
-      json.dumps(route_dict, cls=CustomJsonEncoder)
+      json.dump(route_dict, cls=CustomJsonEncoder)
     ), 200
 
 
 
-#ALL ROUTES /routes/all
-@routes.route('/all', methods=['GET'])
-# @login_required
-def all_routes_index():
-  routes = models.Route.select()
-  route_dicts = [ model_to_dict(route) for route in routes ]
-  print(route_dicts)
-  return jsonify({
-    'data': route_dicts,
-    'message': f"Successfully found {len(route_dicts)} routes",
-    'status': 200
-  }), 200
+
 
 
 
