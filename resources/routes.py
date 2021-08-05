@@ -62,7 +62,7 @@ def show_route(id):
         'length': route.length,
         'images': route.images,
         'skill_level': route.skill_level,
-        'comments': route.comments,
+        'comments': route.comments
       },
       message="Registered users can see more info about this route",
       status=200
