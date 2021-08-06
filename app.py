@@ -3,7 +3,9 @@ import os
 from flask import Flask, g, jsonify
 from flask_login import LoginManager
 
-from werkzeug.http import dump_cookie
+from flask import session
+from flask.sessions import SecureCookieSessionInterface
+
 
 from resources.users import users
 from resources.routes import routes
@@ -82,21 +84,7 @@ def unauthorized():
 # def custom_401(error):
 #     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
 
-
-
-
-
-def set_cookie(response, *args, **kwargs):
-    cookie = dump_cookie(*args, **kwargs)
-
-    if 'samesite' in kwargs and kwargs['samesite'] is None:
-        cookie = "{}; {}".format(cookie, b'SameSite=None'.decode('latin1'))
-
-    response.headers.add(
-        'Set-Cookie',
-        cookie
-    )
-
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(wmattracks)
 
 
 
@@ -121,8 +109,11 @@ def before_request():
 def after_request(response):
   print("you should see this after each request") #
   g.db.close()
-  return response 
-       
+  return response
+def cookies(response):
+    same_cookie = session_cookie.dumps(dict(session))
+    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
+    return response       
 
 
 @app.route('/')
