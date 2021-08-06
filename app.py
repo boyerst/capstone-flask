@@ -23,6 +23,9 @@ app = Flask(__name__)
 
 # app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
+SESSION_COOKIE_SECURE = False
+REMEMBER_COOKIE_SECURE = False
+
 app.secret_key = "secret time"
 login_manager = LoginManager()
 login_manager.init_app(app)
