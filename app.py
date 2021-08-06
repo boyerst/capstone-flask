@@ -3,8 +3,7 @@ import os
 from flask import Flask, g, jsonify
 from flask_login import LoginManager
 
-from flask import session
-from flask.sessions import SecureCookieSessionInterface
+
 
 
 from resources.users import users
@@ -110,10 +109,7 @@ def after_request(response):
   print("you should see this after each request") #
   g.db.close()
   return response
-def cookies(response):
-    same_cookie = session_cookie.dumps(dict(session))
-    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
-    return response       
+       
 
 
 @app.route('/')
