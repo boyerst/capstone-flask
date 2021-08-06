@@ -3,7 +3,7 @@ import os
 from flask import Flask, g, jsonify
 from flask_login import LoginManager
 
-
+from werkzeug.http import dump_cookie
 
 from resources.users import users
 from resources.routes import routes
@@ -81,6 +81,22 @@ def unauthorized():
 # @app.errorhandler(401)
 # def custom_401(error):
 #     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
+
+
+
+
+
+def set_cookie(response, *args, **kwargs):
+    cookie = dump_cookie(*args, **kwargs)
+
+    if 'samesite' in kwargs and kwargs['samesite'] is None:
+        cookie = "{}; {}".format(cookie, b'SameSite=None'.decode('latin1'))
+
+    response.headers.add(
+        'Set-Cookie',
+        cookie
+    )
+
 
 
 
