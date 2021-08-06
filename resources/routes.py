@@ -45,6 +45,10 @@ def all_routes_index():
     'message': f"Successfully found {len(route_dicts)} routes",
     'status': 200
   }), 200
+  resp = make_response('Hello, World!');
+  resp.set_cookie('same-site-cookie', 'foo', samesite='Lax');
+  resp.set_cookie('cross-site-cookie', 'bar', samesite='Lax', secure=True);
+  print(resp)
 
 
 
