@@ -4,8 +4,6 @@ from flask import Flask, g, jsonify
 from flask_login import LoginManager
 
 
-
-
 from resources.users import users
 from resources.routes import routes
 from resources.markers import markers
@@ -83,7 +81,7 @@ def unauthorized():
 # def custom_401(error):
 #     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
 
-session_cookie = SecureCookieSessionInterface().get_signing_serializer(wmattracks)
+
 
 
 
@@ -108,7 +106,7 @@ def before_request():
 def after_request(response):
   print("you should see this after each request") #
   g.db.close()
-  return response
+  return response 
        
 
 
