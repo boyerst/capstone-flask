@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, make_response, request
 from flask_login import LoginManager
 
 
@@ -35,6 +35,54 @@ login_manager.init_app(app)
 print("Here is the app secret_key:")
 print(app.secret_key)
 
+
+# @app.route('/cookie/')
+# def hello_world():
+#     print("here is your COOOOOOOOOOOOOOOOOOOOKIE route")
+#     resp = make_response('Hello, World!');
+#     resp.set_cookie('same-site-cookie', 'foo', samesite='None');
+#     resp.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True);
+#     return resp
+
+
+@app.route('/')
+def hello_world():
+    resp = make_response('Hello, World!');
+    resp.set_cookie('same-site-cookie', 'foo', samesite='None');
+    resp.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True);
+    print("here is your COOOOOOOOOOOOOOOOOOOOKIE route")
+    return resp
+
+# @app.route('/cookie/')
+# def cookie():
+#     res = make_response("Setting a cookie")
+#     res.set_cookie('foo', 'bar', max_age=60*60*24*365*2)
+#     return res
+
+
+
+# @app.route('/')
+# def index():
+#     resp = make_response(render_template(...))
+#     resp.set_cookie('somecookiename', 'I am cookie')
+#     return resp 
+
+# @app.route('/get-cookie/')
+# def get_cookie():
+#     username = request.cookies.get('somecookiename')
+
+
+
+# @app.route('/setcookie')
+# def setcookie():
+#     resp = make_response(f"The Cookie has been Set")
+#     resp.set_cookie('Name','AskPython')
+#     return resp
+ 
+# @app.route('/getcookie')
+# def getcookie():
+#     name = request.cookies.get('Name')
+#     return f"The Site : {name}"
 
 
 # SESSION
@@ -85,13 +133,7 @@ def after_request(response):
   return response 
        
 
-@app.route('/cookie/')
-def hello_world():
-    print("here is your COOOOOOOOOOOOOOOOOOOOKIE Route")
-    resp = make_response('Hello, World!');
-    resp.set_cookie('same-site-cookie', 'foo', samesite='Lax');
-    resp.set_cookie('cross-site-cookie', 'bar', samesite='Lax', secure=True);
-    return resp
+
 
 
 
