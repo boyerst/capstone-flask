@@ -36,15 +36,9 @@ print("Here is the app secret_key:")
 print(app.secret_key)
 
 
-# @app.route('/cookie/')
-# def hello_world():
-#     print("here is your COOOOOOOOOOOOOOOOOOOOKIE route")
-#     resp = make_response('Hello, World!');
-#     resp.set_cookie('same-site-cookie', 'foo', samesite='None');
-#     resp.set_cookie('cross-site-cookie', 'bar', samesite='None', secure=True);
-#     return resp
 
 
+#COOKIES (Set for Chrome 80 samesite attributes breaking Heroku)
 @app.route('/')
 def hello_world():
     resp = make_response('Hello, World!');
@@ -57,36 +51,7 @@ def hello_world():
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 
-# @app.route('/cookie/')
-# def cookie():
-#     res = make_response("Setting a cookie")
-#     res.set_cookie('foo', 'bar', max_age=60*60*24*365*2)
-#     return res
 
-
-
-# @app.route('/')
-# def index():
-#     resp = make_response(render_template(...))
-#     resp.set_cookie('somecookiename', 'I am cookie')
-#     return resp 
-
-# @app.route('/get-cookie/')
-# def get_cookie():
-#     username = request.cookies.get('somecookiename')
-
-
-
-# @app.route('/setcookie')
-# def setcookie():
-#     resp = make_response(f"The Cookie has been Set")
-#     resp.set_cookie('Name','AskPython')
-#     return resp
- 
-# @app.route('/getcookie')
-# def getcookie():
-#     name = request.cookies.get('Name')
-#     return f"The Site : {name}"
 
 
 # SESSION
@@ -136,7 +101,6 @@ def after_request(response):
   g.db.close()
   return response 
        
-
 
 
 
