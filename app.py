@@ -46,24 +46,6 @@ def load_user(user_id):
   except models.DoesNotExist: 
     return None
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#   try:
-#     print("loading the following user")
-#     return models.User.get(user_id) 
-#   except models.DoesNotExist: 
-#     return None
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#   try:
-#     print("loading the following user")
-#     user = models.User.get_by_id(user_id) 
-#     return user 
-#   except models.DoesNotExist: 
-#     return None
-
-
 
 # AUTH
 @login_manager.unauthorized_handler
@@ -75,12 +57,6 @@ def unauthorized():
     message="You must be logged in to access that resource",
     status=401
   ), 401
-
-
-# @app.errorhandler(401)
-# def custom_401(error):
-#     return Response('<Why access is denied string goes here...>', 401, {'WWW-Authenticate':'Basic realm="Login Required"'})
-
 
 
 
@@ -108,6 +84,15 @@ def after_request(response):
   g.db.close()
   return response 
        
+
+@app.route('/cookie/')
+def hello_world():
+    print("here is your COOOOOOOOOOOOOOOOOOOOKIE Route")
+    resp = make_response('Hello, World!');
+    resp.set_cookie('same-site-cookie', 'foo', samesite='Lax');
+    resp.set_cookie('cross-site-cookie', 'bar', samesite='Lax', secure=True);
+    return resp
+
 
 
 @app.route('/')
