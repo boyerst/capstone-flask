@@ -53,6 +53,10 @@ def hello_world():
     print("here is your COOOOOOOOOOOOOOOOOOOOKIE route")
     return resp
 
+
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+
 # @app.route('/cookie/')
 # def cookie():
 #     res = make_response("Setting a cookie")
