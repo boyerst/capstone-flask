@@ -9,12 +9,10 @@ from playhouse.db_url import connect
 # DATABASE = SqliteDatabase('routes.sqlite')
 # DATABASE = SqliteDatabase('markers.sqlite') 
 
-if 'ON_HEROKU' in os.environ: # later we will manually add this env var 
-                              # in heroku so we can write this code
-  DATABASE = connect(os.environ.get('DATABASE_URL')) # heroku will add this 
-                                                     # env var for you 
-                                                     # when you provision the
-                                                     # Heroku Postgres Add-on
+if 'ON_HEROKU' in os.environ: 
+                              
+  DATABASE = connect(os.environ.get('DATABASE_URL')) 
+  
 else:
   DATABASE = SqliteDatabase('markers.sqlite') 
   DATABASE = SqliteDatabase('routes.sqlite')
