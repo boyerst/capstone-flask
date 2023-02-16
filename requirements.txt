@@ -15,4 +15,4 @@ pycparser==2.20
 setuptools==54.0.0
 simplejson==3.17.2
 six==1.15.0
-Werkzeug==1.0.1
+Werkzeug==2.2.3
